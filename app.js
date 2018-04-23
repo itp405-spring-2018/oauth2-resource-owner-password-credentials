@@ -1,6 +1,9 @@
 const express = require('express');
-const app = express();
+const cors = require('cors');
 const Genre = require('./models/Genre');
+const app = express();
+
+app.use(cors());
 
 app.get('/api/genres', function(request, response) {
   Genre.fetchAll().then(function(genres) {
