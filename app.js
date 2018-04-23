@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const Genre = require('./models/Genre');
+const bodyParser = require('body-parser');
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
 
 app.get('/api/genres', function(request, response) {
   Genre.fetchAll().then(function(genres) {

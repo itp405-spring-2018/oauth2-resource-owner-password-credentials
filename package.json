@@ -4,6 +4,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "bookshelf": "^0.13.0",
     "cors": "^2.8.4",
     "express": "^4.16.2",
