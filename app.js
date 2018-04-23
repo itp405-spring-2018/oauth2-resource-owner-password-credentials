@@ -29,7 +29,9 @@ app.post('/oauth/token', (request, response) => {
   }
 
   if (username === 'admin' && password === '123') {
-    let token = jwt.sign({ username }, SECRET_KEY);
+    let token = jwt.sign({ username }, SECRET_KEY, { expiresIn '15m' });
+
+    // store token in database
 
     response.json({
       access_token: token,
@@ -48,6 +50,7 @@ app.use((request, response, next) => {
   } else {
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
       if (!err) {
+        // verify token in database
         request.user = decoded;
         next();
       } else {
