@@ -9,7 +9,6 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/api/genres', function(request, response) {
-  console.log('user', request.user);
   Genre.fetchAll().then((genres) => {
     response.json(genres);
   });
