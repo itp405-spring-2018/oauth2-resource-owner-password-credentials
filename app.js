@@ -73,7 +73,6 @@ app.use((request, response, next) => {
 });
 
 app.get('/api/genres', function(request, response) {
-  console.log('user', request.user);
   Genre.fetchAll().then((genres) => {
     response.json(genres);
   });
