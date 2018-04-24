@@ -29,7 +29,7 @@ app.post('/oauth/token', (request, response) => {
   }
 
   if (username === 'admin' && password === '123') {
-    let token = jwt.sign({ username }, SECRET_KEY, { expiresIn '15m' });
+    let token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '15m' });
 
     // store token in database
 
@@ -41,7 +41,15 @@ app.post('/oauth/token', (request, response) => {
 });
 
 app.use((request, response, next) => {
-  let [ tokenType, token ] = request.get('Authorization').split(' ');
+  let authorizationHeader = request.get('Authorization');
+
+  if (!authorizationHeader) {
+    return response.status(401).json({
+      error: 'invalid_client'
+    });
+  }
+
+  let [ tokenType, token ] = authorizationHeader.split(' ');
 
   if (tokenType !== 'Bearer') {
     response.status(401).json({
@@ -85,6 +93,14 @@ app.get('/api/genres/:id', function(request, response) {
       response.status(404).json({
         error: error.message
       });
+    });
+});
+
+app.post('/api/genres', function(request, response) {
+  let name = request.body.name;
+  new Genre({ Name: name }).save()
+    .then((genre) => {
+      response.json(genre);
     });
 });
 
