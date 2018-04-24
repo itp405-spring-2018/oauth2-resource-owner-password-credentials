@@ -37,6 +37,10 @@ app.post('/oauth/token', (request, response) => {
       access_token: token,
       token_type: 'bearer',
     });
+  } else {
+    response.status(401).json({
+      error: 'invalid_client'
+    });
   }
 });
 
